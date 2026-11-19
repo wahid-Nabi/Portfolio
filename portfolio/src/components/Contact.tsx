@@ -126,7 +126,7 @@ const Contact = () => {
             {/* Location Card */}
             <div className="p-8 bg-slate-900 rounded-lg border border-slate-700 hover:border-slate-600 transition-colors duration-200">
               <h3 className="text-sm font-semibold text-slate-200 mb-3">Location</h3>
-              <p className="text-slate-400 text-sm">+91 9596578282</p>
+              <p className="text-slate-400 text-sm">Pampora, Srinagar, Jammu and Kashmir</p>
             </div>
 
             {/* Social Links */}
