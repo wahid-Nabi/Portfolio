@@ -6,7 +6,7 @@ const Contact = () => {
     email: '',
     message: '',
   })
-  const [submitted, setSubmitted] = useState(false)
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -15,13 +15,21 @@ const Contact = () => {
     })
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const subject = encodeURIComponent(`Portfolio contact from ${formData.name}`)
-    const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`)
-    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=wahidnabi785@gmail.com&su=${subject}&body=${body}`, '_blank', 'noopener,noreferrer')
-    setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 3000)
+    setStatus('sending')
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+      if (!response.ok) throw new Error('Unable to send message')
+      setFormData({ name: '', email: '', message: '' })
+      setStatus('success')
+    } catch {
+      setStatus('error')
+    }
   }
 
   const socialLinks = [
@@ -97,10 +105,13 @@ const Contact = () => {
               {/* Submit Button */}
               <button
                 type="submit"
+                disabled={status === 'sending'}
                 className="w-full px-6 py-3 bg-cyan-500 text-slate-950 hover:bg-cyan-400 font-semibold rounded-lg transition-colors duration-200 text-sm"
               >
-                {submitted ? 'Message Sent! ✓' : 'Send Message'}
+                {status === 'sending' ? 'Sending...' : 'Send Message'}
               </button>
+              {status === 'success' && <p role="status" className="text-sm text-green-400">Thank you! Your message has been sent.</p>}
+              {status === 'error' && <p role="alert" className="text-sm text-red-400">Sorry, your message could not be sent. Please try again or email me directly.</p>}
             </form>
           </div>
 
