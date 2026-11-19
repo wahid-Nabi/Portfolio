@@ -3,6 +3,8 @@ const Skills = () => {
     { category: 'Frontend', items: ['React', 'JavaScript', 'TypeScript', 'HTML', 'CSS', 'Tailwind CSS'] },
     { category: 'Backend', items: ['C#', '.NET 8 / .NET Core', 'ASP.NET Web API', 'RESTful APIs'] },
     { category: 'Data & Persistence', items: ['SQL Server', 'Dapper', 'Entity Framework Core', 'Stored Procedures'] },
+    { category: 'Cloud & DevOps', items: ['Microsoft Azure', 'Azure DevOps (Repos, Boards)', 'GitHub Actions (CI/CD)', 'ASP.NET Core Publish', 'Kudu ZIP Deployment'] },
+    { category: 'AI-Assisted Development', items: ['Claude AI', 'GitHub Copilot', 'Code Reviews', 'Debugging', 'Refactoring', 'Rapid Prototyping'] },
   ]
 
   return (
@@ -14,7 +16,7 @@ const Skills = () => {
         </div>
 
         {/* Skills Grid */}
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {skills.map((skillGroup, idx) => (
             <div
               key={idx}
